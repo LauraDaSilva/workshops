@@ -14,7 +14,7 @@ File description:
 """
 import pandas as pd
 import numpy as np
-import impyute
+#import impyute
 
 # Library to visualize Missing values
 import missingno as mn
@@ -25,8 +25,8 @@ import seaborn as sns
 # Libraries for univariate and bivariate visualization
 import matplotlib
 import matplotlib.pyplot as plt
-import ggplot
-import plotly as py #interactive plot
+#import ggplot
+#import plotly as py #interactive plot
 # Library for data manipulation
 from dfply import *
 
@@ -39,7 +39,7 @@ import functions_data_description as fdd
 
 
 # Getting the data
-trfacc2016 = pd.read_csv('my-pyproject/Output/accidents2016.csv')
+trfacc2016 = pd.read_csv("Output/accidents2016.csv")
 
 # Data types
 # DateTime
@@ -54,6 +54,7 @@ desctrfacc2016 = fdd.full_description(trfacc2016)
 
 # Plotting Missing values
 %matplotlib inline
+%matplotlib tk
 #%matplotlib tk (separate window)
 mn.matrix(trfacc2016)
 # Visualizing correlations of missing values (pairs of columns)
@@ -68,7 +69,7 @@ mn.dendrogram(trfacc2016)
 # 1st type of imputation: Mean
 # Mean imputation using Imputer from scikit-learn library
 imp=Imputer(missing_values="NaN", strategy="mean" )
-speedLimitMean =imp.fit_transform(trfacc2016[["Speed_limit"]]
+speedLimitMean =imp.fit_transform(trfacc2016[["Speed_limit"]])
 
 # 2nd type of imputaiton: classifier
 # Random forest model for multiclass classification
@@ -89,7 +90,6 @@ speedLimitPredicted = rf.predict(X_test)
 
 # Replace the NAs with the predicted values for Speed_Limit
 indexer = trfacc2016[trfacc2016['Speed_limit'].isna() == True].index
-indexer = df[df.ids == encodedid].index
 trfacc2016.loc[indexer, 'Speed_limit'] = speedLimitPredicted
 fdd.full_description(trfacc2016)
 
@@ -190,6 +190,7 @@ sns.pairplot(trfacc2016.iloc[:,1:6], kind="scatter")
 # Boxplot
 %matplotlib tk
 trfacc2016.iloc[:,1:10].dropna().boxplot()
+trfacc2016.dropna().boxplot()
 
 
 
